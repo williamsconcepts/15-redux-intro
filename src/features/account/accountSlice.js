@@ -7,23 +7,23 @@ const initialStateAccount = {
 export default function accountReducer(state = initialStateAccount, action) {
   switch (action.type) {
     case "account/deposit":
-      return { ...state, balance: state.balance + action.payload };
+      return { ...state, balance: state.balance + Number(action.payload) };
     case "account/withdraw":
-      return { ...state, balance: state.balance - action.payload };
+      return { ...state, balance: state.balance - Number(action.payload) };
     case "account/requestLoan":
       if (state.loan > 0) return state;
       return {
         ...state,
-        loan: action.payload.amount,
+        loan: Number(action.payload.amount),
         loanPurpose: action.payload.purpose,
-        balance: state.balance + action.payload.amount,
+        balance: state.balance + Number(action.payload.amount),
       };
     case "account/payLoan":
       return {
         ...state,
         loan: 0,
         loanPurpose: "",
-        balance: state.balance - state.loan,
+        balance: state.balance - Number(state.loan),
       };
 
     default:
